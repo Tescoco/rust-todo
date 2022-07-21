@@ -2,7 +2,7 @@ use crate::schema::todos;
 use diesel::Queryable;
 use rocket::serde::{Deserialize, Serialize};
 
-#[derive(Queryable, Associations, Identifiable, Serialize)]
+#[derive(Queryable, Associations, Identifiable, Serialize, Deserialize)]
 #[table_name = "todos"]
 pub struct Todo {
     pub id: i32,
