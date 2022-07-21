@@ -16,3 +16,23 @@ pub fn create(new_todo: NewTodo) -> Todo {
         })
         .unwrap()
 }
+
+pub fn get_all() -> Vec<Todo> {
+    let connection = db::create_connection();
+    todos::table.load::<Todo>(&connection).unwrap()
+}
+
+pub fn update_todo(todo: Todo) -> Todo {
+    let connection = db::create_connection();
+    diesel::update(todos::table.find(todo.id))
+        .set(todos::columns::title.eq(todo.title))
+        .get_result(&connection)
+        .unwrap()
+}
+
+pub fn delete_todo(id: i32) {
+    let connection = db::create_connection();
+    diesel::delete(todos::table.find(id))
+        .execute(&connection)
+        .unwrap();
+}
